@@ -113,7 +113,12 @@ mod #=&gt; Hello World!
 </ul>
 <h3 id="source_path">SOURCE_PATH</h3>
 <p>An array containing path search of <code>source</code>.</p>
-<pre><code class="language-bash">declare -a SOURCE_PATH=(&quot;.&quot; &quot;$HOME/.local/share/bash&quot;)
+<pre><code class="language-bash">declare -a SOURCE_PATH=(
+    &quot;$HOME/.local/share/bash/%s&quot;
+    &quot;$HOME/.local/share/bash/%s.sh&quot; &quot;$HOME/.local/share/bash/%s.bash&quot;
+    &quot;./%s&quot;
+    &quot;./%s.sh&quot; &quot;./%s.bash&quot;
+)
 </code></pre>
 <h3 id="source_searchers">SOURCE_SEARCHERS</h3>
 <p>An array containing searcher functions of <code>source</code>.
@@ -175,5 +180,5 @@ mod #=&gt; Hello World!
 
 <!--
 MkDocs version : 1.4.3
-Build Date UTC : 2023-05-20 05:56:46.487478+00:00
+Build Date UTC : 2023-05-20 11:02:12.347296+00:00
 -->
