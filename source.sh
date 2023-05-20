@@ -132,9 +132,10 @@ source() {
     fi
 }
 
-# @description Alias of `source`.
+# @description A patched `source` function. In package search, `$1` append to list paths in `SOURCE_PATH` with suffix `.sh` or `.bash`. In script search, `$1` append to list paths in `SOURCE_PATH`.
 # @arg $1 Package or script name.
 # @arg $@ Arguments passed to package/script.
+# @see .
 # shellcheck disable=SC1090 # it's a function
 .() { __0='.' source "$@"; }
 
