@@ -34,7 +34,7 @@ A patched `source` function.
 
 ### .
 
-Alias of `.`.
+Alias of `source`.
 
 #### Arguments
 

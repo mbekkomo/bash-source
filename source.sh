@@ -132,7 +132,7 @@ source() {
     fi
 }
 
-# @description Alias of `.`.
+# @description Alias of `source`.
 # @arg $1 Package or script name.
 # @arg $@ Arguments passed to package/script.
 # shellcheck disable=SC1090 # it's a function
