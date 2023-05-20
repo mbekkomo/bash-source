@@ -1,5 +1,5 @@
 # bash-source
-Improve Bash's `source` into more modular system.
+This code aims to improve Bash's `source` into more modular system.
 
 ## Why?
 Bash's module system is so limited yet confusing, so I made this to cover Bash's module system problems by adding features that is already available in modern languages' module system.
