@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="description" content="None" /><link rel="canonical" href="https://UrNightmaree.github.io/bash-source/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="description" content="None" /><link rel="canonical" href="https://urnightmaree.gitbuh.io/bash-source/" />
       <link rel="shortcut icon" href="img/favicon.ico" />
     <title>bash-source</title>
     <link rel="stylesheet" href="css/theme.css" />
@@ -47,6 +47,10 @@
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#index">Index</a>
         <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#source_path">SOURCE_PATH</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#source_searchers">SOURCE_SEARCHERS</a>
+    </li>
     <li class="toctree-l3"><a class="reference internal" href="#source">source</a>
         <ul>
     <li class="toctree-l4"><a class="reference internal" href="#arguments">Arguments</a>
@@ -102,18 +106,28 @@ mod #=&gt; Hello World!
 <p>Learn more about it <a href="https://github.com/UrNightmaree/bash-source">on Github</a></p>
 <h2 id="index">Index</h2>
 <ul>
+<li><a href="#source_path">SOURCE_PATH</a></li>
+<li><a href="#source_searchers">SOURCE_SEARCHERS</a></li>
 <li><a href="#source">source</a></li>
 <li><a href="#">.</a></li>
 </ul>
+<h3 id="source_path">SOURCE_PATH</h3>
+<p>An array containing path search of <code>source</code>.</p>
+<pre><code class="language-bash">declare -a SOURCE_PATH=(&quot;.&quot; &quot;$HOME/.local/share/bash&quot;)
+</code></pre>
+<h3 id="source_searchers">SOURCE_SEARCHERS</h3>
+<p>An array containing searcher functions of <code>source</code>.
+ <code>bash
+ declare -a SOURCE_SEARCHERS=()</code></p>
 <h3 id="source">source</h3>
-<p>A patched <code>source</code> function.</p>
+<p>A patched <code>source</code> function. In package search, <code>$1</code> append to list paths in <code>SOURCE_PATH</code> with suffix <code>.sh</code> or <code>.bash</code>. In script search, <code>$1</code> append to list paths in <code>SOURCE_PATH</code>.</p>
 <h4 id="arguments">Arguments</h4>
 <ul>
 <li><strong>$1</strong> (Package): or script name.</li>
 <li><strong>...</strong> (Arguments): passed to package/script.</li>
 </ul>
 <h3 id="_1">.</h3>
-<p>Alias of <code>.</code>.</p>
+<p>Alias of <code>source</code>.</p>
 <h4 id="arguments_1">Arguments</h4>
 <ul>
 <li><strong>$1</strong> (Package): or script name.</li>
@@ -161,5 +175,5 @@ mod #=&gt; Hello World!
 
 <!--
 MkDocs version : 1.4.3
-Build Date UTC : 2023-05-20 05:38:29.875372+00:00
+Build Date UTC : 2023-05-20 05:56:46.487478+00:00
 -->
