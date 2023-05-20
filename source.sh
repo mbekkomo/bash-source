@@ -16,69 +16,50 @@
 # Learn more about it [on Github](https://github.com/UrNightmaree/bash-source)
 
 # @description An array containing search paths of `source`.
-declare -a SOURCE_PATH=("." "$HOME/.local/share/bash")
+declare -a SOURCE_PATH=(
+    "$HOME/.local/share/bash/%s"
+    "$HOME/.local/share/bash/%s.sh" "$HOME/.local/share/bash/%s.bash"
+    "./%s"
+    "./%s.sh" "./%s.bash"
+)
 # @description An array containing searcher functions of `source`.
 declare -a SOURCE_SEARCHERS=()
 
-SOURCE_SEARCHERS+=(__source_searchers_default_script)
-# @description A searcher for script file.
+SOURCE_SEARCHERS+=(__source_searchers_default)
+# @description A default searcher.
 # @internal
-__source_searchers_default_script() {
-    local script_path="$1"
+__source_searchers_default() {
+    local script_name="$1"
 
     local -a attempted_path=()
     local found_path error
 
-    for path in "${SOURCE_PATH[@]}"; do
-        if [[ -e "$path/$script_path" ]]; then
-            found_path="$path/$script_path"
-            error=0
-            break
-        else
-            attempted_path+=("$path/$script_path")
-            error=1
-        fi
-    done
+    grep -P '^(\.|\.\.|/)' <<< "$script_name" >/dev/null
+    local grep_status="$?"
+
+    if [[ "$grep_status" == 0 && -e "$script_name" ]]; then
+        found_path="$script_name"
+        error=0
+    else
+        attempted_path+=("$script_name")
+        error=1
+    fi
 
     if (( error )); then
-        echo "${attempted_path[@]}"
-        return 1
-    else
-        echo "$found_path"
+        for fpath in "${SOURCE_PATH[@]}"; do
+            local path
+            path="$(printf "$fpath%s" "$script_name" "")"
+
+            if [[ -e "$path" ]]; then
+                found_path="$path"
+                error=0
+                break
+            else
+                attempted_path+=("$path")
+                error=1
+            fi
+        done
     fi
-}
-
-SOURCE_SEARCHERS+=(__source_searchers_default_package)
-# @description A searcher for package file.
-# @internal
-__source_searchers_default_package() {
-    local package_name="$1"
-    local fpackage_name="pkg_%s"
-
-    local -a attempted_path=()
-    local found_path error
-
-    for path in "${SOURCE_PATH[@]}"; do
-        local package_path_sh
-        # shellcheck disable=SC2059 # i want to DRY
-        package_path_sh="$path/$(printf "$fpackage_name" "$package_name").sh"
-        local package_path_bash
-        # shellcheck disable=SC2059 # same as above
-        package_path_bash="$path/$(printf "$fpackage_name" "$package_name").bash"
-
-        if [[ -e "$package_path_sh" ]]; then
-            found_path="$package_path_sh"
-            error=0
-            break
-        elif [[ -e "$package_path_bash" ]]; then
-            found_path="$package_path_bash"
-            error=0
-            break
-        else
-            attempted_path+=("$package_path_sh" "$package_path_bash")
-            error=1
-        fi
-    done
 
     if (( error )); then
         echo "${attempted_path[@]}"
@@ -95,7 +76,7 @@ __source_searchers_default_package() {
 source() {
     __0="${__0:-source}"
     if ! (( $# )); then
-        echo "$__0: error: package or script is required" >&2
+        echo "$__0: error: script name is required" >&2
         return 2
     fi
 
@@ -120,7 +101,7 @@ source() {
     done
 
     if (( error )); then
-        printf "%s$__0: error: no package/script called '$name'\n" "" >&2
+        printf "%s$__0: error: no script called '$name'\n" "" >&2
 
         for failed_path in "${failed_paths[@]}"; do
             printf "%s\tno file '$failed_path'\n" "" >&2

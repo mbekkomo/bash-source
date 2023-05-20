@@ -22,7 +22,7 @@ source source.sh # patch `source` and `.`
 
 # SOURCE_PATH is an array containing paths where script/package
 # will be find
-SOURCE_PATH+=("/path/to/dir")
+SOURCE_PATH+=("/path/to/dir/%s")
 
 source module.sh # loaded!
 
@@ -53,7 +53,7 @@ export BASH_ENV="/path/to/source.sh"
 
 To verify if it's working, put `source` into your script. The output should be like this.
 ```
-source: error: package or script is required
+source: error: script name is required
 ```
 
 ## License

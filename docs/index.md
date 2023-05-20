@@ -29,7 +29,12 @@ Learn more about it [on Github](https://github.com/UrNightmaree/bash-source)
 
 An array containing path search of `source`.
 ```bash
-declare -a SOURCE_PATH=("." "$HOME/.local/share/bash")
+declare -a SOURCE_PATH=(
+    "$HOME/.local/share/bash/%s"
+    "$HOME/.local/share/bash/%s.sh" "$HOME/.local/share/bash/%s.bash"
+    "./%s"
+    "./%s.sh" "./%s.bash"
+)
 ```
 
 ### SOURCE_SEARCHERS
