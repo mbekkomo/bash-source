@@ -20,8 +20,34 @@ Learn more about it [on Github](https://github.com/UrNightmaree/bash-source)
 
 ## Index
 
+* [SOURCE_VERSION](#source_version)
+* [SOURCE_PATH](#source_path)
+* [SOURCE_SEARCHERS](#source_searchers)
 * [source](#source)
 * [.](#)
+
+### SOURCE_VERSION
+Version of bash-source.
+```bash
+declare -r SOURCE_VERSION="0.3.0"
+```
+
+### SOURCE_PATH
+An array containing search path of `source`.
+```bash
+declare -a SOURCE_PATH=(
+    "$HOME/.local/share/bash/%s"
+    "$HOME/.local/share/bash/%s.sh" "$HOME/.local/share/bash/%s.bash"
+    "./%s"
+    "./%s.sh" "./%s.bash"
+)
+```
+
+### SOURCE_SEARCHERS
+An array containing searcher functions of `source`.
+```bash
+declare -a SOURCE_SEARCHERS=()
+```
 
 ### source
 
