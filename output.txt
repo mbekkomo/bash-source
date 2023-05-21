@@ -1,4 +1,0 @@
-[TRACE Sun May 21 06:30:41 PM WITA 2023]: /home/snake_naree/a
-[TRACE Sun May 21 06:30:42 PM WITA 2023]: /home/snake_naree/a
-[TRACE Sun May 21 06:31:19 PM WITA 2023]: /home/snake_naree/a
-[TRACE Sun May 21 06:31:19 PM WITA 2023]: /home/snake_naree/a
