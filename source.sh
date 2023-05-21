@@ -15,6 +15,12 @@
 #
 # Learn more about it [on Github](https://github.com/UrNightmaree/bash-source)
 
+declare -rp SOURCE_VERSION >/dev/null 2>&1 &&
+    return 0
+
+# @description Version of bash-source
+declare -r SOURCE_VERSION="0.3.0"
+
 # @description An array containing search paths of `source`.
 declare -a SOURCE_PATH=(
     "$HOME/.local/share/bash/%s"
@@ -22,6 +28,7 @@ declare -a SOURCE_PATH=(
     "./%s"
     "./%s.sh" "./%s.bash"
 )
+
 # @description An array containing searcher functions of `source`.
 declare -a SOURCE_SEARCHERS=()
 
@@ -69,9 +76,9 @@ __source_searchers_default() {
     fi
 }
 
-# @description A patched `source` function.
-# @arg $1 Package or script name.
-# @arg $@ Arguments passed to package/script.
+# @description A patched `source` function. In package search, `$1` append to list paths in `SOURCE_PATH` with suffix `.sh` or `.bash`. In script search, `$1` append to list paths in `SOURCE_PATH`.
+# @arg $1 script Script name.
+# @arg $@ args Arguments passed to script.
 # shellcheck disable=SC2120 # it's a function
 source() {
     __0="${__0:-source}"
@@ -113,10 +120,10 @@ source() {
     fi
 }
 
-# @description A patched `source` function. In package search, `$1` append to list paths in `SOURCE_PATH` with suffix `.sh` or `.bash`. In script search, `$1` append to list paths in `SOURCE_PATH`.
-# @arg $1 Package or script name.
-# @arg $@ Arguments passed to package/script.
-# @see .
+# @description Alias for `source`.
+# @arg $1 script Script name.
+# @arg $@ args Arguments passed to script.
+# @see source
 # shellcheck disable=SC1090 # it's a function
 .() { __0='.' source "$@"; }
 

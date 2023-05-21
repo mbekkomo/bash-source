@@ -20,28 +20,8 @@ Learn more about it [on Github](https://github.com/UrNightmaree/bash-source)
 
 ## Index
 
-* [SOURCE_PATH](#source_path)
-* [SOURCE_SEARCHERS](#source_searchers)
 * [source](#source)
 * [.](#)
-
-### SOURCE_PATH
-
-An array containing path search of `source`.
-```bash
-declare -a SOURCE_PATH=(
-    "$HOME/.local/share/bash/%s"
-    "$HOME/.local/share/bash/%s.sh" "$HOME/.local/share/bash/%s.bash"
-    "./%s"
-    "./%s.sh" "./%s.bash"
-)
-```
-
-### SOURCE_SEARCHERS
- An array containing searcher functions of `source`.
- ```bash
- declare -a SOURCE_SEARCHERS=()
- ```
 
 ### source
 
@@ -49,15 +29,19 @@ A patched `source` function. In package search, `$1` append to list paths in `SO
 
 #### Arguments
 
-* **$1** (Package): or script name.
-* **...** (Arguments): passed to package/script.
+* **$1** (script): Script name.
+* **...** (args): Arguments passed to script.
 
 ### .
 
-Alias of `source`.
+Alias for `source`.
 
 #### Arguments
 
-* **$1** (Package): or script name.
-* **...** (Arguments): passed to package/script.
+* **$1** (script): Script name.
+* **...** (args): Arguments passed to script.
+
+#### See also
+
+* [source](#source)
 
