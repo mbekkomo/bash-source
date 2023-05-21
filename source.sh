@@ -16,9 +16,6 @@
 #
 # Learn more about it [on Github](https://github.com/UrNightmaree/bash-source)
 
-source log.sh
-LOG_FILE="output.txt"
-
 declare -rp SOURCE_VERSION >/dev/null 2>&1 &&
     return 0
 
@@ -55,7 +52,6 @@ __source_searchers_default() {
     local full_path
     full_path="$(__alt_realpath "$script_name")"
     
-    log "$full_path" >/dev/null
     if [[ -e "$full_path" ]]; then
         found_path="$full_path"
         error=0
@@ -93,7 +89,6 @@ __source_searchers_default() {
 # @arg $@ args Arguments passed to script.
 # shellcheck disable=SC2120 # it's a function
 source() {
-    declare -p BASH_SOURCE
     __0="${__0:-source}"
     if ! (( $# )); then
         echo "$__0: error: script name is required" >&2
@@ -105,7 +100,6 @@ source() {
     local -a failed_paths=()
     local status_searcher error
 
-    __source_searchers_default "$name"
     for searcher in "${SOURCE_SEARCHERS[@]}"; do
         local path
         path="$("$searcher" "$name")"
