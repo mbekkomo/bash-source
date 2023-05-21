@@ -29,7 +29,7 @@ Learn more about it [on Github](https://github.com/UrNightmaree/bash-source)
 ### SOURCE_VERSION
 Version of bash-source.
 ```bash
-declare -r SOURCE_VERSION="0.3.0"
+declare -r SOURCE_VERSION="0.3.1"
 ```
 
 ### SOURCE_PATH

@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+#i
 # @name bash-source
 # @brief Improve Bash's `source` into more modular system.
 # @description bash-source is a simple script that patches `source` into a more `import`-like function.
@@ -15,11 +16,14 @@
 #
 # Learn more about it [on Github](https://github.com/UrNightmaree/bash-source)
 
+source log.sh
+LOG_FILE="output.txt"
+
 declare -rp SOURCE_VERSION >/dev/null 2>&1 &&
     return 0
 
 # @description Version of bash-source
-declare -r SOURCE_VERSION="0.3.0"
+declare -r SOURCE_VERSION="0.3.1"
 
 # @description An array containing search paths of `source`.
 declare -a SOURCE_PATH=(
@@ -32,6 +36,13 @@ declare -a SOURCE_PATH=(
 # @description An array containing searcher functions of `source`.
 declare -a SOURCE_SEARCHERS=()
 
+__alt_realpath() {
+    local old_pwd;old_pwd="$(pwd)"
+    cd "${1%/*}" >/dev/null 2>&1 || :
+    realpath "$(basename "$1")"
+    cd "$old_pwd" || exit
+}
+
 SOURCE_SEARCHERS+=(__source_searchers_default)
 # @description A default searcher.
 # @internal
@@ -41,14 +52,15 @@ __source_searchers_default() {
     local -a attempted_path=()
     local found_path error
 
-    grep -P '^(\.|\.\.|/)' <<< "$script_name" >/dev/null
-    local grep_status="$?"
-
-    if [[ "$grep_status" == 0 && -e "$script_name" ]]; then
-        found_path="$script_name"
+    local full_path
+    full_path="$(__alt_realpath "$script_name")"
+    
+    log "$full_path" >/dev/null
+    if [[ -e "$full_path" ]]; then
+        found_path="$full_path"
         error=0
     else
-        attempted_path+=("$script_name")
+        attempted_path+=("$full_path")
         error=1
     fi
 
@@ -81,6 +93,7 @@ __source_searchers_default() {
 # @arg $@ args Arguments passed to script.
 # shellcheck disable=SC2120 # it's a function
 source() {
+    declare -p BASH_SOURCE
     __0="${__0:-source}"
     if ! (( $# )); then
         echo "$__0: error: script name is required" >&2
@@ -92,6 +105,7 @@ source() {
     local -a failed_paths=()
     local status_searcher error
 
+    __source_searchers_default "$name"
     for searcher in "${SOURCE_SEARCHERS[@]}"; do
         local path
         path="$("$searcher" "$name")"
