@@ -29,7 +29,7 @@ Learn more about it [on Github](https://github.com/UrNightmaree/bash-source)
 ### SOURCE_VERSION
 Version of bash-source.
 ```bash
-declare -r SOURCE_VERSION="0.3.1"
+declare -r SOURCE_VERSION="0.4.0"
 ```
 
 ### SOURCE_PATH
@@ -51,12 +51,15 @@ declare -a SOURCE_SEARCHERS=()
 
 ### source
 
-A patched `source` function. In package search, `$1` append to list paths in `SOURCE_PATH` with suffix `.sh` or `.bash`. In script search, `$1` append to list paths in `SOURCE_PATH`.
+A patched `source` function. If provided `script` start searching scripts in `SOURCE_PATH` or manually search it. If `args` provided pass `$2..$#` to `script`.
 
 #### Arguments
 
 * **$1** (script): Script name.
 * **...** (args): Arguments passed to script.
+
+#### Options
+* **-r, --no-relative**: Disable relative search path when a sourced script tries to source another script using relative path.
 
 ### .
 
