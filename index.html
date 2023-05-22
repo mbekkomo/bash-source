@@ -57,6 +57,8 @@
         <ul>
     <li class="toctree-l4"><a class="reference internal" href="#arguments">Arguments</a>
     </li>
+    <li class="toctree-l4"><a class="reference internal" href="#options">Options</a>
+    </li>
         </ul>
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#_1">.</a>
@@ -119,7 +121,7 @@ mod #=&gt; Hello World!
 </ul>
 <h3 id="source_version">SOURCE_VERSION</h3>
 <p>Version of bash-source.</p>
-<pre><code class="language-bash">declare -r SOURCE_VERSION=&quot;0.3.1&quot;
+<pre><code class="language-bash">declare -r SOURCE_VERSION=&quot;0.4.0&quot;
 </code></pre>
 <h3 id="source_path">SOURCE_PATH</h3>
 <p>An array containing search path of <code>source</code>.</p>
@@ -135,11 +137,15 @@ mod #=&gt; Hello World!
 <pre><code class="language-bash">declare -a SOURCE_SEARCHERS=()
 </code></pre>
 <h3 id="source">source</h3>
-<p>A patched <code>source</code> function. In package search, <code>$1</code> append to list paths in <code>SOURCE_PATH</code> with suffix <code>.sh</code> or <code>.bash</code>. In script search, <code>$1</code> append to list paths in <code>SOURCE_PATH</code>.</p>
+<p>A patched <code>source</code> function. If provided <code>script</code> start searching scripts in <code>SOURCE_PATH</code> or manually search it. If <code>args</code> provided pass <code>$2..$#</code> to <code>script</code>.</p>
 <h4 id="arguments">Arguments</h4>
 <ul>
 <li><strong>$1</strong> (script): Script name.</li>
 <li><strong>...</strong> (args): Arguments passed to script.</li>
+</ul>
+<h4 id="options">Options</h4>
+<ul>
+<li><strong>-r, --no-relative</strong>: Disable relative search path when a sourced script tries to source another script using relative path.</li>
 </ul>
 <h3 id="_1">.</h3>
 <p>Alias for <code>source</code>.</p>
@@ -194,5 +200,5 @@ mod #=&gt; Hello World!
 
 <!--
 MkDocs version : 1.4.3
-Build Date UTC : 2023-05-21 05:08:28.173706+00:00
+Build Date UTC : 2023-05-22 12:16:47.363875+00:00
 -->
