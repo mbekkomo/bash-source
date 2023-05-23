@@ -20,7 +20,7 @@ declare -rp SOURCE_VERSION >/dev/null 2>&1 &&
     return 0
 
 # @description Version of bash-source
-declare -r SOURCE_VERSION="0.4.0"
+declare -r SOURCE_VERSION="0.4.1"
 
 # @description An array containing search paths of `source`.
 declare -a SOURCE_PATH=(
@@ -103,6 +103,7 @@ source() {
         ;;
 
         *)
+            unset name
             if [[ -z "$name" ]]; then
                 local name="$1"; shift
             else
@@ -136,13 +137,13 @@ source() {
 
         return 1
     else
-        [[ -n "${parsed_arg[NOREL]}" ]] && {
+        [[ -z "${parsed_arg[NOREL]}" ]] && {
             local old_pwd
             old_pwd="$(pwd)"
             cd "${path%/*}" || :
             builtin source "${path##*/}" "${source_args[@]}"
             cd "$old_pwd" || :
-        }; [[ -z "${parsed_arg[NOREL]}" ]] && {
+        }; [[ -n "${parsed_arg[NOREL]}" ]] && {
             builtin source "$path" "${source_args[@]}"
         }
     fi
